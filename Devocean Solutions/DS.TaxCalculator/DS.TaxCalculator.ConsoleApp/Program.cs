@@ -3,12 +3,13 @@
 // Tests can be run on different platforms via VS 2022 using remote testing functionality.
 // Improvements of build-in VS 2022 analyzers.
 // C# 9/10 new features and sugar syntax (some are too "modern" tho :( ).
+// Not going async approach as it would be an overkill
 
 using DS.TaxCalculator.Services.TaxCalculatorServices;
 
 const string ImaginariaCurrency = "IDR";
 
-Console.OutputEncoding = System.Text.Encoding.Unicode;
+Console.OutputEncoding = System.Text.Encoding.UTF8; // To be able to show special characters like ®
 
 Console.WriteLine("Welcome to Devocean Tax Calculator© !");
 Console.WriteLine("Given person's gross salary it will calculate net salary based on Imaginaria's current tax rules.");
