@@ -7,6 +7,6 @@
         /// </summary>
         /// <param name="personGrossSalary"></param>
         /// <returns></returns>
-        decimal GetNetSalary(decimal personGrossSalary); // Working with decimals as they have better precision when working with money
+        decimal GetNetSalary(decimal personGrossSalary); // Using decimals as they have better precision when working with money
     }
 }

@@ -1,8 +1,16 @@
-﻿using DS.TaxCalculator.Services.TaxCalculatorServices;
+﻿// Product build on .NET 6.0 using VS 2022 to take advantage of multi-platform capabilities (user's platform is not known).
+// Performance, build and test improvements.
+// Tests can be run on different platforms via VS 2022 using remote testing functionality.
+// Improvements of build-in VS 2022 analyzers.
+// C# 9/10 new features and sugar syntax (some are too "modern" tho :( ).
+
+using DS.TaxCalculator.Services.TaxCalculatorServices;
 
 const string ImaginariaCurrency = "IDR";
 
-Console.WriteLine("Welcome to Imaginaria Tax Calculator!");
+Console.OutputEncoding = System.Text.Encoding.Unicode;
+
+Console.WriteLine("Welcome to Devocean Tax Calculator© !");
 Console.WriteLine("Given person's gross salary it will calculate net salary based on Imaginaria's current tax rules.");
 Console.WriteLine("Please insert gross salary.");
 
@@ -15,7 +23,10 @@ while (keepCalculating)
 {
     Console.Write("Gross salary: ");
 
-    if (decimal.TryParse(Console.ReadLine(), out decimal personSalary)) // Check if user input is correct. Would prevent crashes and better experience. Working with decimals as they provide better precision when working with money.
+    // Check if user input is correct.
+    // Will prevent crashes and better user experience.
+    // Using decimals as they provide better precision when working with money.
+    if (decimal.TryParse(Console.ReadLine(), out decimal personSalary))
     {
         var imaginariaTaxCalculator = new ImaginariaTaxCalculatorService();
 

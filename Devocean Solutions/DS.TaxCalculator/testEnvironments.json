@@ -1,0 +1,15 @@
+{
+  "version": "1",
+  "environments": [
+    {
+      "name": "dockerImage",
+      "type": "docker",
+      "dockerImage": "dockerTag"
+    },
+    {
+      "name": "WSL-Ubuntu",
+      "type": "wsl",
+      "wslDistribution": "Ubuntu-xx-x"
+    }
+  ]
+}

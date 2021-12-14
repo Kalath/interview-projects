@@ -5,10 +5,10 @@
         // Given that taxation rules can be changed in time it's best to get them from some sort of DB.
         // Based on use-case DB can vary, for the example will be SQLite as it can be shipped alongside the product.
         // 2 tables:
-        // Country (Id*, Country, CountryCurrencyCode);
-        // ImaginariaTaxationRules (Id*, TaxationCountryId (FK), MinimalTaxTreshold, IncomeTaxPercent, SocialTaxPercent, MaximalSocialTreshold, FromDate, ToDate, DateChanged)
-        // Create View to return ImaginariaTaxRules with Date input param
-        // Repository layer to access DB which returns DTO (no ORM framework)
+        // Country (Id*, Country, CountryCurrencyCode)
+        // ImaginariaTaxationRules (Id*, TaxationCountryId (FK), MinimalTaxTreshold, IncomeTaxPercent, SocialTaxPercent, MaximalSocialTreshold, FromDate, ToDate, DateChanged).
+        // Create View to return ImaginariaTaxRules with Date input param.
+        // Repository layer to access DB which returns DTO (no ORM framework).
         // Not going with the above solution as per requirements it's not clear whether client is in hurry or not. So the below is an easy upgradable MVP (Minimal Valuable Product).
         const decimal minimalTaxTreshold = 1000;
 
@@ -34,12 +34,11 @@
 
             return decimal.Round(personGrossSalary, roundPrecision, midPointRound) - incomeTax - socialTax; // Given salary is not payed in fractions of cents (unless it's crypto :D ) I'm returning salary rounded to 2 decimals
                                                                                                             // and MidpointRounding.AwayFromZero.
-                                                                                                            // If requested that can be changed via input param (default to 2)
         }
 
         private static decimal GetIncomeTax(decimal personGrossSalary)
         {
-            const decimal incomeTaxPercent = (decimal)0.1; // Spending a little bit more memory for less CPU calculation
+            const decimal incomeTaxPercent = (decimal)0.1; // Spending a little bit more memory for less CPU calculation.
 
             var taxableIncomeAmount = personGrossSalary - minimalTaxTreshold;
             return taxableIncomeAmount * incomeTaxPercent;
@@ -47,7 +46,7 @@
 
         private static decimal GetSocialTax(decimal personGrossSalary)
         {
-            const decimal socialTaxPercent = (decimal)0.15; // Spending a little bit more memory for less CPU calculation
+            const decimal socialTaxPercent = (decimal)0.15; // Spending a little bit more memory for less CPU calculation.
             const short maximalSocialTreshold = 3000;
 
             var maximumTaxableAmount = personGrossSalary > maximalSocialTreshold ? maximalSocialTreshold : personGrossSalary;
