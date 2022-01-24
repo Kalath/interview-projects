@@ -14,14 +14,13 @@ namespace Invelop.Project.Client.Filters
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
+            const string errMessage = "Unhandled exception with trace Id {0} occurred.";
             if (context.Exception is not null)
             {
-                context.Result = new ObjectResult("Error.")
-                {
-                    StatusCode = 500
-                };
+                context.Result = new StatusCodeResult(StatusCodes.Status500InternalServerError);
 
-                _logger.LogError("Unhandled exception occurred.", context.Exception);
+                var traceId = System.Diagnostics.Activity.Current?.Id ?? context.HttpContext.TraceIdentifier;
+                _logger.LogError(context.Exception, errMessage, traceId);
                 context.ExceptionHandled = true;
             }
         }

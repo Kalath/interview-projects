@@ -21,7 +21,6 @@ namespace Invelop.Project.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            throw new Exception();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
