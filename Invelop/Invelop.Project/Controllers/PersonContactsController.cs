@@ -1,4 +1,5 @@
 ﻿using Invelop.Project.Client.Models;
+using Invelop.Project.Services.Person;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Invelop.Project.Client.Controllers
@@ -21,10 +22,13 @@ namespace Invelop.Project.Client.Controllers
         }
 
         [HttpGet]
-        [Route("/{personId}")]
-        public async Task<IActionResult> Get([FromQuery] int personId)
+        [Route("{personId}")]
+        public async Task<IActionResult> Get(int personId)
         {
-            return Ok(new PersonContacts());
+            var personContactService = new PersonContactService();
+            var personContacts = await personContactService.Get(personId);
+
+            return personContacts != default ? Ok(personContacts) : NotFound();
         }
 
         [HttpPost]
@@ -42,7 +46,7 @@ namespace Invelop.Project.Client.Controllers
 
         [HttpDelete]
         [Route("/{personId}")]
-        public async Task<IActionResult> Delete([FromQuery] int personId)
+        public async Task<IActionResult> Delete([FromQuery] int id)
         {
             throw new NotImplementedException();
         }
