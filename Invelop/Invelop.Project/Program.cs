@@ -1,3 +1,4 @@
+using Invelop.Project.Client;
 using Invelop.Project.Client.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,7 @@ builder.Services.AddControllers(options =>
                                 });
 builder.Services.AddAntiforgery();
 builder.Services.AddResponseCompression();
+builder.Services.ConfigureDependencies();
 
 var app = builder.Build();
 

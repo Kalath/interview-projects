@@ -1,24 +1,31 @@
-<h1 id="tableLabel">Weather forecast</h1>
+<h1 id="tableLabel">Persons Contacts</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
+<p>Persons Contacts.</p>
 
-<p *ngIf="!forecasts"><em>Loading...</em></p>
+<p *ngIf="!personsContacts"><em>Loading...</em></p>
+<button type="button">Create new</button>
 
-<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="forecasts">
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="personsContacts">
   <thead>
     <tr>
-      <th>Date</th>
-      <th>Temp. (C)</th>
-      <th>Temp. (F)</th>
-      <th>Summary</th>
+      <th>Firstname</th>
+      <th>Surname</th>
+      <th>Date of birth</th>
+      <th>Address</th>
+      <th>Phone number</th>
+      <th>IBAN</th>
+      <th><button type="button" (click)="Refresh()">Refresh</button></th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let forecast of forecasts">
-      <td>{{ forecast.date }}</td>
-      <td>{{ forecast.temperatureC }}</td>
-      <td>{{ forecast.temperatureF }}</td>
-      <td>{{ forecast.summary }}</td>
+    <tr *ngFor="let personContacts of personsContacts">
+      <td>{{ personContacts.firstname }}</td>
+      <td>{{ personContacts.surname }}</td>
+      <td>{{ personContacts.dateOfBirth | date: 'dd-MM-yyyy' }}</td>
+      <td>{{ personContacts.address }}</td>
+      <td>{{ personContacts.phonenumber }}</td>
+      <td>{{ personContacts.iban }}</td>
+      <td> <button type="button" (click)="deletePersonContacts(personContacts.id)">Delete</button> </td>
     </tr>
   </tbody>
 </table>
