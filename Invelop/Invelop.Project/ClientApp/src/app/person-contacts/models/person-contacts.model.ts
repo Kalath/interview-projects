@@ -1,4 +1,4 @@
-export declare class PersonContacts {
+export interface PersonContacts {
     id: number;
     firstname: string;
     surname: string;

@@ -90,7 +90,7 @@ namespace Invelop.Project.Repository.Person
             command.CommandText = sqlInsertQuery;
             command.CommandType = CommandType.Text;
 
-            long? dateOfBirthEpoch = personContacts.DateOfBirth.HasValue ? new DateTimeOffset(personContacts.DateOfBirth.Value).ToUnixTimeSeconds() : null;
+            long? dateOfBirthEpoch = personContacts.DateOfBirth.HasValue ? new DateTimeOffset(personContacts.DateOfBirth.Value.Date).ToUnixTimeSeconds() : null;
             command.Parameters.AddWithValue(nameof(personContacts.Firstname), personContacts.Firstname);
             command.Parameters.AddWithValue(nameof(personContacts.Surname), personContacts.Surname);
             command.Parameters.AddWithValue(nameof(personContacts.DateOfBirth), dateOfBirthEpoch.HasValue ? dateOfBirthEpoch : DBNull.Value);
@@ -126,7 +126,7 @@ namespace Invelop.Project.Repository.Person
             command.CommandText = sqlUpdateQuery;
             command.CommandType = CommandType.Text;
 
-            long? dateOfBirthEpoch = personContacts.DateOfBirth.HasValue ? new DateTimeOffset(personContacts.DateOfBirth.Value).ToUnixTimeSeconds() : null;
+            long? dateOfBirthEpoch = personContacts.DateOfBirth.HasValue ? new DateTimeOffset(personContacts.DateOfBirth.Value.Date).ToUnixTimeSeconds() : null;
             command.Parameters.AddWithValue(nameof(personContacts.Id), personContacts.Id);
             command.Parameters.AddWithValue(nameof(personContacts.Firstname), personContacts.Firstname);
             command.Parameters.AddWithValue(nameof(personContacts.Surname), personContacts.Surname);
