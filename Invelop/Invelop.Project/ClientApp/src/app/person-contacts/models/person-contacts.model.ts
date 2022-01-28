@@ -4,6 +4,6 @@ export interface PersonContacts {
     surname: string;
     dateOfBirth: Date;
     address: string;
-    phonenumber: string;
+    phoneNumber: string;
     iban: string;
 }

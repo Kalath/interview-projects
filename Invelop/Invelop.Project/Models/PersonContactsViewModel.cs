@@ -15,7 +15,7 @@ namespace Invelop.Project.Client.Models
         public string Surname { get; set; }
 
         //Would be good to have custom validator (derived from ValidationAttribute) for DoB to not be after Today
-        public DateTime? DateOfBirth { get; set; }
+        public DateTimeOffset? DateOfBirth { get; set; }
 
         [StringLength(100)]
         public string? Address { get; set; }

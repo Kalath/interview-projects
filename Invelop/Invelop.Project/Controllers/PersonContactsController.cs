@@ -37,7 +37,7 @@ namespace Invelop.Project.Client.Controllers
         {
             var personContacts = await _personContactsService.Get(Id);
 
-            return personContacts != default ? Ok(personContacts) : NotFound();
+            return personContacts != default ? Ok(MapModelToView(personContacts)) : NotFound();
         }
 
         [HttpPost]
@@ -78,7 +78,7 @@ namespace Invelop.Project.Client.Controllers
             {
                 Id = personContactsViewModel.Id,
                 Address = personContactsViewModel.Address,
-                DateOfBirth = personContactsViewModel.DateOfBirth,
+                DateOfBirth = personContactsViewModel.DateOfBirth?.Date,
                 Firstname = personContactsViewModel.Firstname,
                 IBAN = personContactsViewModel.IBAN,
                 PhoneNumber = personContactsViewModel.PhoneNumber,
@@ -86,17 +86,17 @@ namespace Invelop.Project.Client.Controllers
             };
         }
 
-        private static PersonContactsViewModel MapModelToView(PersonContacts contactsView)
+        private static PersonContactsViewModel MapModelToView(PersonContacts personContacts)
         {
             return new PersonContactsViewModel
             {
-                Id = contactsView.Id,
-                Address = contactsView.Address,
-                DateOfBirth = contactsView.DateOfBirth,
-                Firstname = contactsView.Firstname,
-                IBAN = contactsView.IBAN,
-                PhoneNumber = contactsView.PhoneNumber,
-                Surname = contactsView.Surname
+                Id = personContacts.Id,
+                Address = personContacts.Address,
+                DateOfBirth = personContacts.DateOfBirth.HasValue ? new DateTimeOffset(personContacts.DateOfBirth.Value.Date, new TimeSpan()) : null,
+                Firstname = personContacts.Firstname,
+                IBAN = personContacts.IBAN,
+                PhoneNumber = personContacts.PhoneNumber,
+                Surname = personContacts.Surname
             };
         }
     }

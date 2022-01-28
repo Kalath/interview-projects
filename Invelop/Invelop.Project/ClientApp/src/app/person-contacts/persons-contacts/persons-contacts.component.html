@@ -2,8 +2,7 @@
 <hr>
 
 <p *ngIf="!dataLoaded"><em>Loading...</em></p>
-<button pButton pRipple type="button" label="Add Person Contacts" class="p-button-rounded" routerLinkActive="active"
-[routerLink]="['/add-update-person-contacts']"></button>
+<button pButton pRipple type="button" label="Add Person Contacts" class="p-button-rounded add-person-contacts" [routerLink]="['/add-update-person-contacts']"></button>
 
 <p-table [value]="personsContacts" responsiveLayout="scroll">
   <ng-template pTemplate="header">
@@ -25,11 +24,11 @@
       <td>{{ personContacts.surname }}</td>
       <td>{{ personContacts.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
       <td>{{ personContacts.address }}</td>
-      <td>{{ personContacts.phonenumber }}</td>
+      <td>{{ personContacts.phoneNumber }}</td>
       <td>{{ personContacts.iban }}</td>
       <td>
         <button pButton type="button" icon="pi pi-user" title="Edit" class="p-button-rounded p-button-info p-button-outlined"
-          routerLinkActive="active" [routerLink]="['/add-update-person-contacts', personContacts.id]"></button>
+          [routerLink]="['/add-update-person-contacts', personContacts.id]"></button>
         <button pButton type="button" icon="pi pi-times" title="Delete" class="p-button-rounded p-button-danger p-button-outlined"
           (click)="deletePersonContacts(personContacts.id)"></button>
       </td>

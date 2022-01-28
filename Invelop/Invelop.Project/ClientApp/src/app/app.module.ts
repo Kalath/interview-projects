@@ -14,6 +14,7 @@ import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { MessageModule } from 'primeng/message';
+import { TabMenuModule } from 'primeng/tabmenu';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { MessageModule } from 'primeng/message';
     InputTextModule,
     KeyFilterModule,
     MessageModule,
+    TabMenuModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'persons-contacts', component: PersonsContactsComponent },

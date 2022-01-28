@@ -1,55 +1,61 @@
 <h1 *ngIf="editMode">Add Person Contacts</h1>
 <h1 *ngIf="!editMode">Edit Person Contacts</h1>
 <hr>
-<div class="p-fluid grid">
-    <div class="card">
-        <div class="field col-6 md:col-4">
-            <span class="p-float-label">
-                <input type="text" class="firstname" name="firstname" pInputText
-                    [(ngModel)]="personContacts.firstname" required maxlength="60" #firstname="ngModel">
-                <label for="firstname">Firstname</label>
-            </span>
-            <p-message *ngIf="firstname.invalid && firstname.dirty && firstname.errors?.['required']" severity="error" text="Firstname is required"></p-message>
-        </div>
-        <div class="field col-6 md:col-4">
-            <span class="p-float-label">
-                <input type="text" class="surname" required [(ngModel)]="personContacts.surname" name="surname"
-                    pInputText required maxlength="60" #surname="ngModel">
-                <label for="surname">Surname</label>
-            </span>
-            <p-message *ngIf="surname.invalid && surname.dirty && surname.errors?.['required']" severity="error" text="Surname is required"></p-message>
-        </div>
-        <div class="field col-6 md:col-4">
-            <span class="p-float-label">
-                <input type="text" class="address" maxlength="100" [(ngModel)]="personContacts.address" name="address"
-                    pInputText>
-                <label for="address">Address</label>
-            </span>
-        </div>
-        <div class="field col-6 md:col-4">
-            <span class="p-float-label">
-                <input type="text" class="phonenumber" [(ngModel)]="personContacts.phonenumber"
-                    name="phonenumber" pInputText>
-                <label for="phonenumber">Phone number</label>
-            </span>
-        </div>
-        <div class="field col-6 md:col-4">
-            <span class="p-float-label">
-                <input type="text" class="iban" maxlength="34" [(ngModel)]="personContacts.iban" name="iban" pInputText>
-                <label for="iban">IBAN</label>
-            </span>
-        </div>
-        <div class="field col-2 md:col-4">
-            <span class="p-float-label">
-                <p-calendar [(ngModel)]="personContacts.dateOfBirth" [showIcon]="true" dateFormat="dd/mm/yy"
-                    name="dateOfBirth"></p-calendar>
-                <label for="dateOfBirth">Date of birth</label>
-            </span>
+<form #personContactsForm="ngForm">
+    <div class="p-fluid grid">
+        <div class="card">
+            <div class="field col-6 md:col-4">
+                <span class="p-float-label">
+                    <input type="text" class="firstname" name="firstname" pInputText
+                        [(ngModel)]="personContacts.firstname" required maxlength="60" #firstname="ngModel">
+                    <label for="firstname">Firstname</label>
+                </span>
+                <p-message *ngIf="firstname.invalid && firstname.dirty && firstname.errors?.['required']"
+                    severity="error" text="Firstname is required"></p-message>
+            </div>
+            <div class="field col-6 md:col-4">
+                <span class="p-float-label">
+                    <input type="text" class="surname" required [(ngModel)]="personContacts.surname" name="surname"
+                        pInputText required maxlength="60" #surname="ngModel">
+                    <label for="surname">Surname</label>
+                </span>
+                <p-message *ngIf="surname.invalid && surname.dirty && surname.errors?.['required']" severity="error"
+                    text="Surname is required"></p-message>
+            </div>
+            <div class="field col-6 md:col-4">
+                <span class="p-float-label">
+                    <input type="text" class="address" maxlength="100" [(ngModel)]="personContacts.address"
+                        name="address" pInputText>
+                    <label for="address">Address</label>
+                </span>
+            </div>
+            <div class="field col-6 md:col-4">
+                <span class="p-float-label">
+                    <input type="text" class="phonenumber" [(ngModel)]="personContacts.phoneNumber" name="phonenumber"
+                        pInputText>
+                    <label for="phonenumber">Phone number</label>
+                </span>
+            </div>
+            <div class="field col-6 md:col-4">
+                <span class="p-float-label">
+                    <input type="text" class="iban" maxlength="34" [(ngModel)]="personContacts.iban" name="iban"
+                        pInputText>
+                    <label for="iban">IBAN</label>
+                </span>
+            </div>
+            <div class="field col-2 md:col-4">
+                <span class="p-float-label">
+                    <p-calendar [maxDate]="maxCalendarDate" [firstDayOfWeek]="1" [showButtonBar]="true" [readonlyInput]="true" [(ngModel)]="personContacts.dateOfBirth" [showIcon]="true" dateFormat="dd/mm/yy"
+                        name="dateOfBirth"></p-calendar>
+                    <label for="dateOfBirth">Date of birth</label>
+                </span>
+            </div>
         </div>
     </div>
-</div>
-<button pButton *ngIf="editMode" class="p-button-rounded button-update"
-    (click)="updatePersonContacts()" label="Update"></button>
-<button pButton *ngIf="!editMode" class="p-button-rounded button-create" label="Add" (click)="addPersonContacts()"></button>
-<button pButton class="p-button-rounded p-button-secondary button-cancel" routerLinkActive="active"
-    [routerLink]="['/persons-contacts']" label="Cancel"></button>
+    <button pButton [disabled]="!personContactsForm.valid" *ngIf="editMode" class="p-button-rounded button-update"
+        (click)="updatePersonContacts(personContactsForm)" label="Update"></button>
+    <button pButton [disabled]="!personContactsForm.valid" *ngIf="!editMode" class="p-button-rounded button-create"
+        label="Add" (click)="addPersonContacts(personContactsForm)"></button>
+    <button pButton class="p-button-rounded p-button-secondary button-cancel" [routerLink]="['/persons-contacts']"
+        label="Cancel"></button>
+</form>

@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { MenuItem } from 'primeng/api';
+import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-nav-menu',
@@ -6,13 +9,29 @@ import { Component } from '@angular/core';
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
-  isExpanded = false;
+  public readonly items: MenuItem[] = [
+    { label: 'Home', icon: 'pi pi-fw pi-home', routerLink: '/' },
+    { label: 'Persons Contacts', icon: 'pi pi-fw pi-folder', routerLink: '/persons-contacts' }
+  ];
+  public activeItem: MenuItem = this.items[0];
 
-  collapse() {
-    this.isExpanded = false;
-  }
+  constructor(private router: Router) { }
 
-  toggle() {
-    this.isExpanded = !this.isExpanded;
+  ngOnInit(): void {
+    this.router.events
+      .pipe(
+        filter(event => event instanceof NavigationEnd),
+        map(n => n))
+      .subscribe(event => {
+        let d: NavigationEnd;
+        d = event as NavigationEnd;
+        if (d && d.url) {
+          const menuItem = this.items.find(m => m.routerLink === d.url);
+
+          if (menuItem) {
+            this.activeItem = menuItem;
+          }
+        }
+      });
   }
 }
