@@ -5,11 +5,15 @@ VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Invelop.Project.Client", "Invelop.Project.Client.csproj", "{B23F1097-9B5F-454C-82C6-12AED3240BF3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Invelop.Project.Services", "..\Invelop.Project.Services\Invelop.Project.Services.csproj", "{78555C26-F057-4F9E-B27D-3A59826145B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Invelop.Project.Services", "..\Invelop.Project.Services\Invelop.Project.Services.csproj", "{78555C26-F057-4F9E-B27D-3A59826145B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Invelop.Project.Core", "..\Invelop.Project.Core\Invelop.Project.Core.csproj", "{D7D7FAFC-48DE-4B2C-A827-96C57E99E6B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Invelop.Project.Core", "..\Invelop.Project.Core\Invelop.Project.Core.csproj", "{D7D7FAFC-48DE-4B2C-A827-96C57E99E6B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Invelop.Project.Repository", "..\Invelop.Project.Repository\Invelop.Project.Repository.csproj", "{7D2149F4-F638-4C1F-8883-20D76C09D93C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Invelop.Project.Repository", "..\Invelop.Project.Repository\Invelop.Project.Repository.csproj", "{7D2149F4-F638-4C1F-8883-20D76C09D93C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Invelop.Project.Client.Tests", "..\Invelop.Project.Client.Tests\Invelop.Project.Client.Tests.csproj", "{C8B09A88-E2D1-4641-BB80-03A4DD111246}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Invelop.Project.Services.Tests", "..\Invelop.Project.Services.Tests\Invelop.Project.Services.Tests.csproj", "{BA05A855-EAE5-4D0D-9758-0C321003F8D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{7D2149F4-F638-4C1F-8883-20D76C09D93C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D2149F4-F638-4C1F-8883-20D76C09D93C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D2149F4-F638-4C1F-8883-20D76C09D93C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8B09A88-E2D1-4641-BB80-03A4DD111246}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8B09A88-E2D1-4641-BB80-03A4DD111246}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8B09A88-E2D1-4641-BB80-03A4DD111246}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8B09A88-E2D1-4641-BB80-03A4DD111246}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA05A855-EAE5-4D0D-9758-0C321003F8D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA05A855-EAE5-4D0D-9758-0C321003F8D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA05A855-EAE5-4D0D-9758-0C321003F8D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA05A855-EAE5-4D0D-9758-0C321003F8D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

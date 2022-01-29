@@ -1,5 +1,5 @@
 ﻿using Invelop.Project.Client.Models;
-using Invelop.Project.Core.Models;
+using Invelop.Project.Client.Services.Person;
 using Invelop.Project.Services.Person;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,13 +9,13 @@ namespace Invelop.Project.Client.Controllers
     [Route("[controller]")]
     public class PersonContactsController : ControllerBase
     {
-        private readonly ILogger<PersonContactsController> _logger;
         private readonly IPersonContactsService _personContactsService;
+        private readonly IPersonContactsMapService _personContactsMapService;
 
-        public PersonContactsController(ILogger<PersonContactsController> logger, IPersonContactsService personContactsService)
+        public PersonContactsController(IPersonContactsService personContactsService, IPersonContactsMapService personContactsMapService)
         {
-            _logger = logger;
             _personContactsService = personContactsService;
+            _personContactsMapService = personContactsMapService;
         }
 
         [HttpGet]
@@ -23,9 +23,9 @@ namespace Invelop.Project.Client.Controllers
         {
             var personsContacts = await _personContactsService.GetAll();
 
-            if (personsContacts != default)
+            if (personsContacts != default && personsContacts.Any())
             {
-                var responseModel = personsContacts.Select(p => MapModelToView(p));
+                var responseModel = personsContacts.Select(p => _personContactsMapService.MapModelToView(p));
                 return Ok(responseModel);
             }
 
@@ -37,13 +37,13 @@ namespace Invelop.Project.Client.Controllers
         {
             var personContacts = await _personContactsService.Get(Id);
 
-            return personContacts != default ? Ok(MapModelToView(personContacts)) : NotFound();
+            return personContacts != default ? Ok(_personContactsMapService.MapModelToView(personContacts)) : NotFound();
         }
 
         [HttpPost]
         public async Task<IActionResult> Insert([FromBody] PersonContactsViewModel personContactsViewModel)
         {
-            var personContacts = MapViewToModel(personContactsViewModel);
+            var personContacts = _personContactsMapService.MapViewToModel(personContactsViewModel);
 
             var newId = await _personContactsService.Insert(personContacts);
 
@@ -58,7 +58,7 @@ namespace Invelop.Project.Client.Controllers
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] PersonContactsViewModel personContactsViewModel)
         {
-            var personContacts = MapViewToModel(personContactsViewModel);
+            var personContacts = _personContactsMapService.MapViewToModel(personContactsViewModel);
             var updated = await _personContactsService.Update(personContacts);
 
             return updated ? NoContent() : BadRequest();
@@ -70,34 +70,6 @@ namespace Invelop.Project.Client.Controllers
             var deleted = await _personContactsService.Delete(id);
 
             return deleted ? NoContent() : BadRequest();
-        }
-
-        private static PersonContacts MapViewToModel(PersonContactsViewModel personContactsViewModel)
-        {
-            return new PersonContacts
-            {
-                Id = personContactsViewModel.Id,
-                Address = personContactsViewModel.Address,
-                DateOfBirth = personContactsViewModel.DateOfBirth?.Date,
-                Firstname = personContactsViewModel.Firstname,
-                IBAN = personContactsViewModel.IBAN,
-                PhoneNumber = personContactsViewModel.PhoneNumber,
-                Surname = personContactsViewModel.Surname
-            };
-        }
-
-        private static PersonContactsViewModel MapModelToView(PersonContacts personContacts)
-        {
-            return new PersonContactsViewModel
-            {
-                Id = personContacts.Id,
-                Address = personContacts.Address,
-                DateOfBirth = personContacts.DateOfBirth.HasValue ? new DateTimeOffset(personContacts.DateOfBirth.Value.Date, new TimeSpan()) : null,
-                Firstname = personContacts.Firstname,
-                IBAN = personContacts.IBAN,
-                PhoneNumber = personContacts.PhoneNumber,
-                Surname = personContacts.Surname
-            };
         }
     }
 }

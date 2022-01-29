@@ -1,6 +1,9 @@
-<h1 *ngIf="editMode">Add Person Contacts</h1>
-<h1 *ngIf="!editMode">Edit Person Contacts</h1>
+<h1 *ngIf="!editMode">Add Person Contacts</h1>
+<h1 *ngIf="editMode">Edit Person Contacts</h1>
 <hr>
+<div>
+    <p-progressSpinner *ngIf="inProgess"></p-progressSpinner>
+</div>
 <form #personContactsForm="ngForm">
     <div class="p-fluid grid">
         <div class="card">
@@ -31,8 +34,8 @@
             </div>
             <div class="field col-6 md:col-4">
                 <span class="p-float-label">
-                    <input type="text" class="phonenumber" [(ngModel)]="personContacts.phoneNumber" name="phonenumber"
-                        pInputText>
+                    <input type="text" class="phonenumber" maxlength="30" [(ngModel)]="personContacts.phoneNumber"
+                        name="phonenumber" pInputText>
                     <label for="phonenumber">Phone number</label>
                 </span>
             </div>
@@ -45,8 +48,9 @@
             </div>
             <div class="field col-2 md:col-4">
                 <span class="p-float-label">
-                    <p-calendar [maxDate]="maxCalendarDate" [firstDayOfWeek]="1" [showButtonBar]="true" [readonlyInput]="true" [(ngModel)]="personContacts.dateOfBirth" [showIcon]="true" dateFormat="dd/mm/yy"
-                        name="dateOfBirth"></p-calendar>
+                    <p-calendar [maxDate]="maxCalendarDate" [firstDayOfWeek]="1" [showButtonBar]="true"
+                        [readonlyInput]="true" [(ngModel)]="personContacts.dateOfBirth" [showIcon]="true"
+                        dateFormat="dd/mm/yy" name="dateOfBirth"></p-calendar>
                     <label for="dateOfBirth">Date of birth</label>
                 </span>
             </div>

@@ -15,6 +15,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { MessageModule } from 'primeng/message';
 import { TabMenuModule } from 'primeng/tabmenu';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { TabMenuModule } from 'primeng/tabmenu';
     KeyFilterModule,
     MessageModule,
     TabMenuModule,
+    ProgressSpinnerModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'persons-contacts', component: PersonsContactsComponent },

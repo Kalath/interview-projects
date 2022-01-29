@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
-import { DateServiceService } from 'src/app/services/date-service.service';
-import { PersonContacts } from '../models/person-contacts.model';
-import { PersonContactsService } from '../services/person-contacts.service';
+import { finalize, map, takeUntil } from 'rxjs/operators';
+import { DateServiceService } from 'src/app/shared/services/date-service.service';
+import { PersonContacts } from '../shared/models/person-contacts.model';
+import { PersonContactsService } from '../shared/services/person-contacts.service';
 
 @Component({
   selector: 'app-persons-contacts',
@@ -12,7 +12,7 @@ import { PersonContactsService } from '../services/person-contacts.service';
 })
 export class PersonsContactsComponent {
   public personsContacts: PersonContacts[] = [];
-  public dataLoaded: boolean = false;
+  public inProgess: boolean = false;
   private readonly ngUnsubscribe = new Subject();
 
   constructor(private personContactsService: PersonContactsService, private dateServiceService: DateServiceService) { }
@@ -32,8 +32,13 @@ export class PersonsContactsComponent {
 
   public deletePersonContacts(Id: number) {
     if (confirm('This action will permanently delete the record! Are you sure you want to proceed?')) {
+      this.inProgess = true;
+
       this.personContactsService.Delete(Id)
-        .pipe(takeUntil(this.ngUnsubscribe))
+        .pipe(finalize(() => {
+          this.inProgess = false;
+        }),
+          takeUntil(this.ngUnsubscribe))
         .subscribe(() => {
           this.loadData();
         }, error => console.error(error));
@@ -41,20 +46,22 @@ export class PersonsContactsComponent {
   }
 
   private loadData() {
-    this.dataLoaded = false;
+    this.inProgess = true;
     this.personContactsService.GetAll()
-      .pipe(map(p => {
-        if (p && p.length > 0) {
-          p.forEach(item => {
-            item.dateOfBirth = this.dateServiceService.toLocalDateFromServerUtcDate(item.dateOfBirth) as any;
-          })
-        }
-        return p;
+      .pipe(finalize(() => {
+        this.inProgess = false;
       }),
+        map(p => {
+          if (p && p.length > 0) {
+            p.forEach(item => {
+              item.dateOfBirth = this.dateServiceService.toLocalDateFromServerUtcDate(item.dateOfBirth) as any;
+            })
+          }
+          return p;
+        }),
         takeUntil(this.ngUnsubscribe))
       .subscribe(result => {
         this.personsContacts = result;
-        this.dataLoaded = true;
       }, error => console.error(error));
   }
 }

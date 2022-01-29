@@ -1,8 +1,11 @@
 <h1 id="tableLabel">Persons Contacts</h1>
 <hr>
 
-<p *ngIf="!dataLoaded"><em>Loading...</em></p>
-<button pButton pRipple type="button" label="Add Person Contacts" class="p-button-rounded add-person-contacts" [routerLink]="['/add-update-person-contacts']"></button>
+<div>
+  <p-progressSpinner *ngIf="inProgess"></p-progressSpinner>
+</div>
+<button pButton pRipple type="button" label="Add Person Contacts" class="p-button-rounded add-person-contacts"
+  [routerLink]="['/add-update-person-contacts']"></button>
 
 <p-table [value]="personsContacts" responsiveLayout="scroll">
   <ng-template pTemplate="header">
@@ -14,7 +17,8 @@
       <th>Phone number</th>
       <th>IBAN</th>
       <th>
-        <button pButton type="button" label="Refresh" (click)="Refresh()" class="p-button-rounded p-button-info"></button>
+        <button pButton type="button" label="Refresh" (click)="Refresh()"
+          class="p-button-rounded p-button-info"></button>
       </th>
     </tr>
   </ng-template>
@@ -27,9 +31,11 @@
       <td>{{ personContacts.phoneNumber }}</td>
       <td>{{ personContacts.iban }}</td>
       <td>
-        <button pButton type="button" icon="pi pi-user" title="Edit" class="p-button-rounded p-button-info p-button-outlined"
+        <button pButton type="button" icon="pi pi-user" title="Edit"
+          class="p-button-rounded p-button-info p-button-outlined"
           [routerLink]="['/add-update-person-contacts', personContacts.id]"></button>
-        <button pButton type="button" icon="pi pi-times" title="Delete" class="p-button-rounded p-button-danger p-button-outlined"
+        <button pButton type="button" icon="pi pi-times" title="Delete"
+          class="p-button-rounded p-button-danger p-button-outlined"
           (click)="deletePersonContacts(personContacts.id)"></button>
       </td>
     </tr>

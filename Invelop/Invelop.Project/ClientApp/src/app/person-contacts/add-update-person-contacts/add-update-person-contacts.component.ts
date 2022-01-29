@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
-import { PersonContacts } from '../models/person-contacts.model';
-import { PersonContactsService } from '../services/person-contacts.service';
+import { finalize, map, takeUntil } from 'rxjs/operators';
+import { PersonContacts } from '../shared/models/person-contacts.model';
+import { PersonContactsService } from '../shared/services/person-contacts.service';
 import { NgForm } from '@angular/forms';
-import { DateServiceService } from 'src/app/services/date-service.service';
+import { DateServiceService } from 'src/app/shared/services/date-service.service';
 
 @Component({
   selector: 'app-add-update-person-contacts',
@@ -16,6 +16,7 @@ export class AddUpdatePersonContactsComponent implements OnInit {
   public readonly maxCalendarDate = new Date();
   private readonly ngUnsubscribe = new Subject();
 
+  public inProgess: boolean = false;
   public editMode: boolean = false;
   public personContacts: PersonContacts = {} as PersonContacts;
 
@@ -30,16 +31,20 @@ export class AddUpdatePersonContactsComponent implements OnInit {
       let Id = Number(params['Id']);
 
       if (Id) {
+        this.inProgess = true;
         this.personContactsService.Get(Id)
-          .pipe(map(p => {
-            p.dateOfBirth = this.dateServiceService.toLocalDateFromServerUtcDate(p.dateOfBirth) as any
-            return p;
+          .pipe(finalize(() => {
+            this.inProgess = false;
           }),
+            map(p => {
+              p.dateOfBirth = this.dateServiceService.toLocalDateFromServerUtcDate(p.dateOfBirth) as any
+              return p;
+            }),
             takeUntil(this.ngUnsubscribe))
           .subscribe(result => {
             this.personContacts = result;
             this.editMode = true;
-          }, error => console.error(error));
+          });
       }
     });
   }
@@ -51,10 +56,14 @@ export class AddUpdatePersonContactsComponent implements OnInit {
 
   public addPersonContacts(form: NgForm) {
     if (form.valid) {
+      this.inProgess = true;
       const modelToAdd = this.formatModel(this.personContacts);
 
       this.personContactsService.Insert(modelToAdd)
-        .pipe(takeUntil(this.ngUnsubscribe))
+        .pipe(finalize(() => {
+          this.inProgess = false;
+        }),
+          takeUntil(this.ngUnsubscribe))
         .subscribe(() => {
           alert('Added! Returning to Persons Contacts.');
           this.navigateToMain();
@@ -67,10 +76,14 @@ export class AddUpdatePersonContactsComponent implements OnInit {
 
   public updatePersonContacts(form: NgForm) {
     if (form.valid) {
+      this.inProgess = true;
       const modelToUpdate = this.formatModel(this.personContacts);
 
       this.personContactsService.Update(modelToUpdate)
-        .pipe(takeUntil(this.ngUnsubscribe))
+        .pipe(finalize(() => {
+          this.inProgess = false;
+        }),
+          takeUntil(this.ngUnsubscribe))
         .subscribe(() => {
           alert('Updated! Returning to Persons Contacts.');
           this.navigateToMain();
